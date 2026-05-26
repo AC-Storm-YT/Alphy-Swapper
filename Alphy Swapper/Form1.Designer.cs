@@ -17,7 +17,6 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabSwapper = new System.Windows.Forms.TabPage();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
@@ -76,8 +75,8 @@
             // 
             // materialCard1
             // 
-            this.materialCard1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.materialCard1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialCard1.Controls.Add(this.txtCustomFolderName);
@@ -98,12 +97,14 @@
             // 
             // txtCustomFolderName
             // 
-            this.txtCustomFolderName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtCustomFolderName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCustomFolderName.AnimateReadOnly = false;
             this.txtCustomFolderName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtCustomFolderName.Depth = 0;
             this.txtCustomFolderName.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtCustomFolderName.Hint = "Optional: Custom Name (e.g. My Custom Fennec)";
+            this.txtCustomFolderName.LeadingIcon = null;
             this.txtCustomFolderName.Location = new System.Drawing.Point(17, 153);
             this.txtCustomFolderName.MaxLength = 100;
             this.txtCustomFolderName.MouseState = MaterialSkin.MouseState.OUT;
@@ -112,6 +113,7 @@
             this.txtCustomFolderName.Size = new System.Drawing.Size(718, 50);
             this.txtCustomFolderName.TabIndex = 9;
             this.txtCustomFolderName.Text = "";
+            this.txtCustomFolderName.TrailingIcon = null;
             // 
             // cmbDonor
             // 
@@ -120,7 +122,7 @@
             this.cmbDonor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmbDonor.Depth = 0;
             this.cmbDonor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cmbDonor.DropDownHeight = 400;
+            this.cmbDonor.DropDownHeight = 432;
             this.cmbDonor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDonor.DropDownWidth = 121;
             this.cmbDonor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
@@ -139,12 +141,11 @@
             // 
             // cmbTarget
             // 
-            this.cmbTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)));
             this.cmbTarget.AutoResize = false;
             this.cmbTarget.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmbTarget.Depth = 0;
             this.cmbTarget.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cmbTarget.DropDownHeight = 400;
+            this.cmbTarget.DropDownHeight = 432;
             this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarget.DropDownWidth = 121;
             this.cmbTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
@@ -163,13 +164,13 @@
             // 
             // cmbCategory
             // 
-            this.cmbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.cmbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbCategory.AutoResize = false;
             this.cmbCategory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cmbCategory.Depth = 0;
             this.cmbCategory.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cmbCategory.DropDownHeight = 400;
+            this.cmbCategory.DropDownHeight = 432;
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.DropDownWidth = 121;
             this.cmbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
@@ -195,12 +196,12 @@
             this.btnRevert.Depth = 0;
             this.btnRevert.HighEmphasis = false;
             this.btnRevert.Icon = null;
-            this.btnRevert.Location = new System.Drawing.Point(659, 219);
+            this.btnRevert.Location = new System.Drawing.Point(660, 219);
             this.btnRevert.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnRevert.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnRevert.Name = "btnRevert";
             this.btnRevert.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnRevert.Size = new System.Drawing.Size(76, 36);
+            this.btnRevert.Size = new System.Drawing.Size(75, 36);
             this.btnRevert.TabIndex = 3;
             this.btnRevert.Text = "REVERT";
             this.btnRevert.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
@@ -216,12 +217,12 @@
             this.btnSwap.Depth = 0;
             this.btnSwap.HighEmphasis = true;
             this.btnSwap.Icon = null;
-            this.btnSwap.Location = new System.Drawing.Point(460, 219);
+            this.btnSwap.Location = new System.Drawing.Point(466, 219);
             this.btnSwap.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnSwap.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSwap.Name = "btnSwap";
             this.btnSwap.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSwap.Size = new System.Drawing.Size(183, 36);
+            this.btnSwap.Size = new System.Drawing.Size(177, 36);
             this.btnSwap.TabIndex = 2;
             this.btnSwap.Text = "Execute Asset Swap";
             this.btnSwap.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -266,7 +267,7 @@
             // 
             // materialCard2
             // 
-            this.materialCard2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.materialCard2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.materialCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialCard2.Controls.Add(this.btnClearAlphyMods);
@@ -331,21 +332,25 @@
             // 
             // txtAlphyModsDir
             // 
-            this.txtAlphyModsDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtAlphyModsDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAlphyModsDir.AnimateReadOnly = false;
             this.txtAlphyModsDir.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAlphyModsDir.Depth = 0;
             this.txtAlphyModsDir.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtAlphyModsDir.Hint = "Alphy 1.x Mods Directory (Optional - Auto structures exports)";
-            this.txtAlphyModsDir.Location = new System.Drawing.Point(17, 191);
+            this.txtAlphyModsDir.Hint = "Alphy Mods Directory (Optional - Auto structures exports)";
+            this.txtAlphyModsDir.LeadingIcon = null;
+            this.txtAlphyModsDir.Location = new System.Drawing.Point(17, 198);
             this.txtAlphyModsDir.MaxLength = 300;
             this.txtAlphyModsDir.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAlphyModsDir.Multiline = false;
             this.txtAlphyModsDir.Name = "txtAlphyModsDir";
             this.txtAlphyModsDir.ReadOnly = true;
-            this.txtAlphyModsDir.Size = new System.Drawing.Size(540, 50);
+            this.txtAlphyModsDir.Size = new System.Drawing.Size(540, 36);
             this.txtAlphyModsDir.TabIndex = 5;
             this.txtAlphyModsDir.Text = "";
+            this.txtAlphyModsDir.TrailingIcon = null;
+            this.txtAlphyModsDir.UseTallSize = false;
             // 
             // btnBrowseDonor
             // 
@@ -370,21 +375,25 @@
             // 
             // txtDonorDir
             // 
-            this.txtDonorDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtDonorDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDonorDir.AnimateReadOnly = false;
             this.txtDonorDir.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtDonorDir.Depth = 0;
             this.txtDonorDir.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtDonorDir.Hint = "Game Files Directory (e.g. C:\\Games\\RocketLeague\\TAGame\\CookedPCConsole)";
-            this.txtDonorDir.Location = new System.Drawing.Point(17, 121);
+            this.txtDonorDir.LeadingIcon = null;
+            this.txtDonorDir.Location = new System.Drawing.Point(17, 128);
             this.txtDonorDir.MaxLength = 300;
             this.txtDonorDir.MouseState = MaterialSkin.MouseState.OUT;
             this.txtDonorDir.Multiline = false;
             this.txtDonorDir.Name = "txtDonorDir";
             this.txtDonorDir.ReadOnly = true;
-            this.txtDonorDir.Size = new System.Drawing.Size(620, 50);
+            this.txtDonorDir.Size = new System.Drawing.Size(620, 36);
             this.txtDonorDir.TabIndex = 3;
             this.txtDonorDir.Text = "";
+            this.txtDonorDir.TrailingIcon = null;
+            this.txtDonorDir.UseTallSize = false;
             // 
             // btnBrowseOutput
             // 
@@ -409,21 +418,25 @@
             // 
             // txtOutputDir
             // 
-            this.txtOutputDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtOutputDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOutputDir.AnimateReadOnly = false;
             this.txtOutputDir.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtOutputDir.Depth = 0;
             this.txtOutputDir.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtOutputDir.Hint = "Fallback Output Directory (Used if Alphy Mods directory is cleared)";
-            this.txtOutputDir.Location = new System.Drawing.Point(17, 51);
+            this.txtOutputDir.LeadingIcon = null;
+            this.txtOutputDir.Location = new System.Drawing.Point(17, 58);
             this.txtOutputDir.MaxLength = 300;
             this.txtOutputDir.MouseState = MaterialSkin.MouseState.OUT;
             this.txtOutputDir.Multiline = false;
             this.txtOutputDir.Name = "txtOutputDir";
             this.txtOutputDir.ReadOnly = true;
-            this.txtOutputDir.Size = new System.Drawing.Size(620, 50);
+            this.txtOutputDir.Size = new System.Drawing.Size(620, 36);
             this.txtOutputDir.TabIndex = 1;
             this.txtOutputDir.Text = "";
+            this.txtOutputDir.TrailingIcon = null;
+            this.txtOutputDir.UseTallSize = false;
             // 
             // lblSettingsTitle
             // 
@@ -433,7 +446,7 @@
             this.lblSettingsTitle.Location = new System.Drawing.Point(17, 14);
             this.lblSettingsTitle.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblSettingsTitle.Name = "lblSettingsTitle";
-            this.lblSettingsTitle.Size = new System.Drawing.Size(182, 19);
+            this.lblSettingsTitle.Size = new System.Drawing.Size(183, 19);
             this.lblSettingsTitle.TabIndex = 0;
             this.lblSettingsTitle.Text = "Mod Export Configuration";
             // 
@@ -460,6 +473,7 @@
             this.Controls.Add(this.materialTabSelector1);
             this.MinimumSize = new System.Drawing.Size(800, 450);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Alphy Swapper";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.materialTabControl1.ResumeLayout(false);
