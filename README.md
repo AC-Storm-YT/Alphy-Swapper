@@ -1,26 +1,31 @@
-# 🚀 Alphy Swapper
+# 🚀 Alphy Swapper Plugin
 
-Alphy Swapper is a standalone desktop application that allows you to directly manage and swap Rocket League assets (UPK files).
+Alphy Swapper is an advanced, official plugin for the **Alphy Mod Manager** that allows you to directly manage and swap Rocket League assets (UPK files) entirely offline. 
+
+By running as a native plugin, it completely eliminates the need for manual folder configuration and seamlessly syncs with your main modding environment.
 
 ## ✨ Key Features
 
-* **Direct UPK Editing:** Dynamically injects your chosen assets directly into the game's package files.
-* **Auto-Structuring:** Seamlessly integrates with the original **Alphy Mod Manager**. If linked, the swapper automatically builds the correct folder hierarchy (e.g., `Body\Fennec (Replaces Breakout)`) and drops the exported file right inside. (ALPHY ONLY)
-* **Custom Folder Naming:** Full control over your export names with an optional custom text box. (ALPHY ONLY)
-* **Fully Embedded Engine:** The Python backend, encryption keys, and item databases are packed directly into the `.exe`. No messy external folders required.
+* **Seamless Integration:** Runs directly inside the Alphy. No need to run or manage a separate program.
+* **Zero Configuration:** The plugin uses reflection to automatically read your Rocket League game path directly from Alphy's memory.
+* **Smart Auto-Structuring:** Automatically builds the correct folder hierarchy (e.g., `Body\Fennec (Replaces Breakout)`) and drops the exported swap right inside your active Alphy `mods` folder.
 
 ## 🛠️ Setup & Usage
 
-1. Download and run `Alphy Swapper.exe`.
-2. Navigate to the **Settings** tab:
-   * **Game Files Directory:** Link your Rocket League `CookedPCConsole` folder.
-   * **Fallback Output Directory:** Select where you want standalone mods saved.
-   * **Alphy Mods Directory (Optional):** Link your existing Alphy 1.x mods folder to enable automated sub-folder structuring.
-3. Navigate to the **Asset Swapper** tab:
-   * Select an item category (Body, Decal, Wheels, etc.).
-   * Choose the item you want to replace (Target).
-   * Choose the item you want to replace it with (Donor).
-   * Click **Execute Asset Swap**.
+### Installation
+The easiest way to install the Swapper is directly through Alphy:
+1. Launch **Alphy**.
+2. Click the **Plugins** button at the bottom of the left sidebar.
+3. Find Alphy Swapper and click **INSTALL PLUGIN**. Alphy will automatically download the latest version and load it directly into memory.
+
+### Generating a Swap
+1. Click **RUN SWAPPER** from the Plugins menu.
+2. Select an item category (Body, Decal, Wheels, etc.).
+3. Choose the item you want to replace (Target).
+4. Choose the item you want to equip (Donor).
+5. *(Optional)* Enter a custom folder name for your new mod.
+6. Click **GENERATE SWAP**.
+7. Close the plugin window, and your new mod will automatically be waiting for you in Alphy's grid!
 
 ## 🧠 Credits & Acknowledgements
 
