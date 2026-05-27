@@ -15,7 +15,7 @@ By running as a native plugin, it completely eliminates the need for manual fold
 ## 🛠️ Setup & Usage
 
 ### ⚠️ Prerequisites
-The Alphy Swapper engine requires **Python 3.8.0 or newer** to execute the background asset modifications. 
+The Alphy Swapper plugin requires **Python 3.8.0 or newer** to execute the background asset modifications. 
 
 **Crucial Installation Step:** When running the Python installer, you **must UNCHECK** the box that says **"Add Python to PATH"** at the bottom of the window, exactly as shown below:
 
