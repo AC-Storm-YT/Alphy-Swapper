@@ -1,6 +1,6 @@
 # 🚀 Alphy Swapper Plugin
 
-Alphy Swapper is an advanced, official plugin for the **Alphy Mod Manager** that allows you to directly manage and swap Rocket League assets (UPK files) entirely offline. 
+Alphy Swapper is an advanced, official plugin for the **Alphy Mod Manager** that allows you to directly manage and swap Rocket League assets (UPK files). 
 
 By running as a native plugin, it completely eliminates the need for manual folder configuration and seamlessly syncs with your main modding environment.
 
