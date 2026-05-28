@@ -201,10 +201,29 @@ namespace Alphy2
                 if (root?.Items != null)
                 {
                     allItems = root.Items;
-                    var categories = allItems.Select(x => x.Slot).Where(s => !string.IsNullOrEmpty(s)).Distinct().OrderBy(s => s).ToList();
+
+                    var supportedRawSlots = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        "Body", "Decal", "Wheels", "Rocket Boost", "Goal Explosion",
+                        "Trail", "Paint Finish", "Player Banner", "Antenna", "Topper", "Boost Audio",
+                        "Engine Audio", "Avatar Border"
+                    };
+
+                    var categories = allItems.Select(x => x.Slot)
+                                             .Where(s => !string.IsNullOrEmpty(s))
+                                             .Distinct()
+                                             .OrderBy(s => s)
+                                             .ToList();
 
                     cmbCategory.Items.Clear();
-                    foreach (var category in categories) cmbCategory.Items.Add(category);
+
+                    foreach (var category in categories)
+                    {
+                        if (supportedRawSlots.Contains(category))
+                            cmbCategory.Items.Add(category);
+                        else
+                            cmbCategory.Items.Add($"{category} ⚠️ (Unsupported)");
+                    }
 
                     LogToConsole($"System: Loaded {allItems.Count} items across {categories.Count} categories.");
                 }
@@ -217,7 +236,7 @@ namespace Alphy2
 
         private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedCategory = cmbCategory.SelectedItem?.ToString();
+            string selectedCategory = cmbCategory.SelectedItem?.ToString().Replace(" ⚠️ (Unsupported)", "");
             if (string.IsNullOrEmpty(selectedCategory)) return;
 
             var filteredItems = allItems.Where(x => x.Slot == selectedCategory).OrderBy(x => x.Product).ToList();
@@ -283,7 +302,7 @@ namespace Alphy2
             btnSwap.Enabled = false;
             LogToConsole($"System: Swapping [{targetSelection.DisplayName}] -> [{donorSelection.DisplayName}]...");
 
-            string rawCategory = cmbCategory.SelectedItem?.ToString() ?? "Unknown";
+            string rawCategory = cmbCategory.SelectedItem?.ToString().Replace(" ⚠️ (Unsupported)", "") ?? "Unknown";
             string alphyCategory = MapSlotToAlphyCategory(rawCategory);
 
             string folderName;
