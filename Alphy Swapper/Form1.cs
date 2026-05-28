@@ -47,14 +47,88 @@ namespace Alphy2
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             LogToConsole("System: Alphy Swapper Plugin Initializing...");
+
+            ToggleUI(false);
+
             Directory.CreateDirectory(baseFolder);
             Directory.CreateDirectory(backendFolder);
 
             ExtractEmbeddedFiles();
             LoadItemsData();
+
+            await VerifyPythonDependenciesAsync();
+
+            ToggleUI(true);
+        }
+
+        private void ToggleUI(bool isEnabled)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => ToggleUI(isEnabled)));
+                return;
+            }
+            cmbCategory.Enabled = isEnabled;
+            cmbTarget.Enabled = isEnabled;
+            cmbDonor.Enabled = isEnabled;
+            txtCustomFolderName.Enabled = isEnabled;
+            btnSwap.Enabled = isEnabled;
+        }
+
+        private async Task VerifyPythonDependenciesAsync()
+        {
+            LogToConsole("System: Verifying Python packages (pip & cryptography) are up to date...");
+
+            try
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = "python",
+                    Arguments = "-m pip install --upgrade pip cryptography",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process process = new Process { StartInfo = psi })
+                {
+                    process.OutputDataReceived += (sender, args) =>
+                    {
+                        if (string.IsNullOrWhiteSpace(args.Data)) return;
+
+                        if (!args.Data.Contains("Requirement already satisfied"))
+                        {
+                            LogToConsole($"Updater: {args.Data}");
+                        }
+                    };
+
+                    process.ErrorDataReceived += (sender, args) =>
+                    {
+                        if (string.IsNullOrWhiteSpace(args.Data)) return;
+
+                        if (!args.Data.Contains("WARNING: You are using pip version"))
+                        {
+                            LogToConsole($"Updater Warning: {args.Data}", true);
+                        }
+                    };
+
+                    process.Start();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    await Task.Run(() => process.WaitForExit());
+                }
+
+                LogToConsole("System: Dependency verification complete. Ready!");
+            }
+            catch (Exception ex)
+            {
+                LogToConsole($"System WARNING: Python not found. Did you check 'Add to PATH'? ({ex.Message})", true);
+            }
         }
 
         private void ExtractEmbeddedFiles()
@@ -178,15 +252,15 @@ namespace Alphy2
         private string MapSlotToAlphyCategory(string rawSlot)
         {
             if (string.IsNullOrEmpty(rawSlot)) return "Unknown";
-            string s = rawSlot.ToLower();
+            string s = rawSlot.ToLower().Trim();
 
             if (s == "player banner" || s == "banner") return "Banner";
-            if (s == "engineaudio" || s == "boost audio") return "Boost Audio";
+            if (s.Contains("boost audio") || s.Contains("engineaudio")) return "Boost Audio";
             if (s == "skin" || s == "decal") return "Decal";
-            if (s == "goalexplosion" || s == "goal explosion") return "Goal Explosion";
+            if (s.Contains("goalexplosion") || s.Contains("goal explosion")) return "Goal Explosion";
             if (s == "topper" || s == "hat") return "Hat";
-            if (s == "paintfinish" || s == "paint") return "Paint";
-            if (s == "rocketboost" || s == "boost") return "Boost";
+            if (s.Contains("paint")) return "Paint";
+            if (s.Contains("boost") && !s.Contains("audio")) return "Boost";
             if (s == "wheels" || s == "wheel") return "Wheels";
             if (s == "body") return "Body";
             if (s == "antenna") return "Antenna";
@@ -288,6 +362,9 @@ namespace Alphy2
         private void LogToConsole(string message, bool isError = false)
         {
             if (string.IsNullOrEmpty(message)) return;
+
+            if (message.Contains("UserWarning: You are using cryptography on a 32-bit Python")) return;
+            if (message.Contains("from cryptography.hazmat.bindings.openssl import binding")) return;
 
             if (txtConsole.InvokeRequired)
             {

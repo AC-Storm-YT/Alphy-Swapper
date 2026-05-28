@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.tabSwapper = new System.Windows.Forms.TabPage();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
@@ -230,6 +231,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.materialTabControl1);
             this.Controls.Add(this.materialTabSelector1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Sizable = false;
