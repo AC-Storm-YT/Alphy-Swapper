@@ -9,7 +9,7 @@ namespace Alphy2
 
         public string Name => "Alphy Swapper";
         public string Description => "Advanced .upk and .bnk asset swapper.";
-        public string Version => "1.0.2";
+        public string Version => "1.0.3";
 
         public void Initialize(Alphy.Form1.IAlphyHost host)
         {

@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
 
 namespace Alphy2
 {
@@ -80,55 +82,140 @@ namespace Alphy2
 
         private async Task VerifyPythonDependenciesAsync()
         {
-            LogToConsole("System: Verifying Python packages (pip & cryptography) are up to date...");
+            LogToConsole("System: Verifying Python dependencies...");
+
+            List<string> pythonCommands = new List<string> { "py", "python" };
+            string portableExe = Path.Combine(backendFolder, @"python\python.exe");
+
+            if (File.Exists(portableExe))
+            {
+                pythonCommands.Insert(0, portableExe);
+            }
+
+            bool pipSuccess = await RunPythonCommandAsync("-m pip install --upgrade pip", "Checking for pip updates...", pythonCommands);
+
+            if (!pipSuccess)
+            {
+                LogToConsole("System WARNING: Python not found. Initializing Alphy Portable Python installation...");
+                bool portableInstalled = await InstallPortablePythonAsync();
+
+                if (portableInstalled)
+                {
+                    pythonCommands.Clear();
+                    pythonCommands.Add(portableExe);
+
+                    pipSuccess = await RunPythonCommandAsync("-m pip install --upgrade pip", "Checking portable pip...", pythonCommands);
+                }
+            }
+
+            if (!pipSuccess)
+            {
+                LogToConsole("System FATAL: Could not install or locate Python. Please report this in the Discord.", true);
+                return;
+            }
+            bool cryptoSuccess = await RunPythonCommandAsync("-m pip install cryptography", "Verifying cryptography package...", pythonCommands);
+
+            if (cryptoSuccess)
+                LogToConsole("System: Dependency verification complete. Ready!");
+            else
+                LogToConsole("System WARNING: Failed to install cryptography package.", true);
+        }
+
+        private async Task<bool> InstallPortablePythonAsync()
+        {
+            string pythonDir = Path.Combine(backendFolder, "python");
+            string zipPath = Path.Combine(backendFolder, "python.zip");
+            string getPipPath = Path.Combine(backendFolder, "get-pip.py");
+            string pythonExe = Path.Combine(pythonDir, "python.exe");
 
             try
             {
-                ProcessStartInfo psi = new ProcessStartInfo
+                if (Directory.Exists(pythonDir)) Directory.Delete(pythonDir, true);
+                Directory.CreateDirectory(pythonDir);
+
+                using (HttpClient client = new HttpClient())
                 {
-                    FileName = "python",
-                    Arguments = "-m pip install --upgrade pip cryptography",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+                    LogToConsole("Downloader: Fetching Portable Python (64-bit, ~8MB)... Please wait.");
+                    byte[] pythonBytes = await client.GetByteArrayAsync("https://www.python.org/ftp/python/3.11.9/python-3.11.9-embed-amd64.zip");
+                    File.WriteAllBytes(zipPath, pythonBytes);
 
-                using (Process process = new Process { StartInfo = psi })
-                {
-                    process.OutputDataReceived += (sender, args) =>
-                    {
-                        if (string.IsNullOrWhiteSpace(args.Data)) return;
+                    LogToConsole("Downloader: Extracting Python engine...");
+                    ZipFile.ExtractToDirectory(zipPath, pythonDir);
+                    File.Delete(zipPath);
 
-                        if (!args.Data.Contains("Requirement already satisfied"))
-                        {
-                            LogToConsole($"Updater: {args.Data}");
-                        }
-                    };
+                    string pthFile = Path.Combine(pythonDir, "python311._pth");
+                    string pthContent = File.ReadAllText(pthFile);
+                    pthContent = pthContent.Replace("#import site", "import site");
+                    File.WriteAllText(pthFile, pthContent);
 
-                    process.ErrorDataReceived += (sender, args) =>
-                    {
-                        if (string.IsNullOrWhiteSpace(args.Data)) return;
+                    LogToConsole("Downloader: Fetching pip installer script...");
+                    byte[] pipBytes = await client.GetByteArrayAsync("https://bootstrap.pypa.io/get-pip.py");
+                    File.WriteAllBytes(getPipPath, pipBytes);
 
-                        if (!args.Data.Contains("WARNING: You are using pip version"))
-                        {
-                            LogToConsole($"Updater Warning: {args.Data}", true);
-                        }
-                    };
+                    LogToConsole("Downloader: Installing pip locally... Almost done.");
+                    await RunPythonCommandAsync($"\"{getPipPath}\"", "Configuring local environment...", new List<string> { pythonExe });
+                    File.Delete(getPipPath);
 
-                    process.Start();
-                    process.BeginOutputReadLine();
-                    process.BeginErrorReadLine();
-
-                    await Task.Run(() => process.WaitForExit());
+                    LogToConsole("System: Portable Python successfully installed and isolated!");
+                    return true;
                 }
-
-                LogToConsole("System: Dependency verification complete. Ready!");
             }
             catch (Exception ex)
             {
-                LogToConsole($"System WARNING: Python not found. Did you check 'Add to PATH'? ({ex.Message})", true);
+                LogToConsole($"Downloader Error: {ex.Message}", true);
+                return false;
             }
+        }
+
+        private async Task<bool> RunPythonCommandAsync(string arguments, string statusMessage, List<string> pythonCommands)
+        {
+            LogToConsole($"System: {statusMessage}");
+
+            foreach (string cmd in pythonCommands)
+            {
+                try
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = cmd,
+                        Arguments = arguments,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    using (Process process = new Process { StartInfo = psi })
+                    {
+                        process.OutputDataReceived += (sender, args) =>
+                        {
+                            if (string.IsNullOrWhiteSpace(args.Data)) return;
+                            if (!args.Data.Contains("Requirement already satisfied"))
+                                LogToConsole($"Updater: {args.Data}");
+                        };
+
+                        process.ErrorDataReceived += (sender, args) =>
+                        {
+                            if (string.IsNullOrWhiteSpace(args.Data)) return;
+                            if (!args.Data.Contains("WARNING: You are using pip version"))
+                                LogToConsole($"Updater Log: {args.Data}");
+                        };
+
+                        process.Start();
+                        process.BeginOutputReadLine();
+                        process.BeginErrorReadLine();
+
+                        await Task.Run(() => process.WaitForExit());
+
+                        if (process.ExitCode == 0) return true;
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            return false;
         }
 
         private void ExtractEmbeddedFiles()
