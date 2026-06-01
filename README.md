@@ -89,3 +89,10 @@ This change was made because Alphy v2.0.0 and newer builds connect to cloud infr
 
 Official builds remain **clean and unobfuscated**.
 
+---
+
+## Credits & Acknowledgements
+
+Shadxw also provided his work for the swapping system used in [Oryx](https://discord.gg/sWhS6F8v9a), which allowed me to create a fallback engine for Alphy Swapper **v1.1.0**.
+
+Additional thanks to Crunchy and [RLUPKTools](https://github.com/CrunchyRL/RLUPKTools) for the foundational technical research.
