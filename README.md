@@ -89,8 +89,3 @@ This change was made because Alphy v2.0.0 and newer builds connect to cloud infr
 
 Official builds remain **clean and unobfuscated**.
 
----
-
-## Credits & Acknowledgements
-
-A massive thank you goes to [Crunchy](https://github.com/CrunchyRL/RLUPKTools). The backend UPK parsing, decryption, and package structure handling in this project would not have been possible without their foundational open-source work on RLUPKTools.
