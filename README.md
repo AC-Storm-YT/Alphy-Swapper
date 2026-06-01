@@ -1,43 +1,98 @@
-# 🚀 Alphy Swapper Plugin
+# Alphy Swapper Plugin
 
-Alphy Swapper is an advanced, official plugin for the **Alphy Mod Manager** that allows you to directly manage and swap Rocket League assets (UPK files) entirely offline. 
+Alphy Swapper is an advanced, official plugin for the **Alphy Mod Manager** that lets you generate custom Rocket League cosmetic swaps from supported UPK assets.
 
-By running as a native plugin, it completely eliminates the need for manual folder configuration and seamlessly syncs with your main modding environment.
+It runs directly inside Alphy, reads the game path from the main app, exports generated swaps into your Alphy `mods` folder, and refreshes the mod list automatically.
 
-## ✨ Key Features
+> **Repository Notice:** Starting after **Alphy Swapper v1.0.3**, official plugin builds are closed-source. The public repository remains available for history, downloads, documentation, and legacy source code up to v1.0.3.
 
-* **Seamless Integration:** Runs directly inside the Alphy Mod Manager. No need to run or manage a separate program.
-* **Zero Configuration:** The plugin uses reflection to automatically read your Rocket League game path directly from Alphy's memory. No settings tab required!
-* **Smart Auto-Structuring:** Automatically builds the correct folder hierarchy (e.g., `Body\Fennec (Replaces Breakout)`) and drops the exported swap right inside your active Alphy `mods` folder.
-* **Instant UI Refresh:** As soon as a swap is generated, the plugin commands Alphy to instantly refresh its interface. Your newly created mod appears in the grid immediately—no restarts required!
-* **Fully Embedded Engine:** The Python backend, encryption keys, and item databases are packed directly into the plugin's `.dll`. No messy external folders or dependencies.
+---
 
-## 🛠️ Setup & Usage
+## Key Features
 
-### ⚠️ Prerequisites
-The Alphy Swapper plugin requires **Python 3.8.0 or newer** to execute the background asset modifications. 
+* **Seamless Integration:** Runs directly inside Alphy. No separate launcher or manual folder linking required.
+* **Smart Exporting:** Automatically builds the correct folder structure, such as `Body/Fennec (Replaces Breakout)`, and places the generated mod in Alphy's active `mods` folder.
+* **Instant Refresh:** After a swap is generated, the plugin tells Alphy to refresh the mod grid immediately.
+* **Selectable Engines:** Choose between RLUPKTools, Alphy, and Alphy Pro depending on the swap you are generating.
+* **Automatic Backend Setup:** The plugin checks for Python and required packages such as `cryptography`. If needed, it can prepare a portable Python backend inside `%AppData%\AlphySwapper\Backend`.
 
-**Crucial Installation Step:** When running the Python installer, you **must UNCHECK** the box that says **"Add Python to PATH"** at the bottom of the window, exactly as shown below:
+---
 
-![Python Installer - Uncheck Add to PATH](https://i.imgur.com/VqKqFra.png)
+## Swapping Engines
+
+### RLUPKTools (Default)
+
+The default and recommended engine for normal use. It is designed to safely rebuild supported UPK swaps and should be used first.
+
+### Alphy
+
+A simpler fallback engine for cases where a specific swap does not work correctly with the default RLUPKTools engine.
+
+### Alphy Pro [BETA]
+
+Alphy Pro is a beta-only engine available to users with beta feature access in the official Alphy Discord server.
+
+Everyone can see the option in the engine dropdown, but only authorized beta testers can select and use it. Alphy Pro runs the RLUPKTools-style rewrite first, then falls back to the simpler Alphy engine if needed.
+
+---
+
+## Setup & Usage
 
 ### Installation
-The easiest way to install the Swapper is directly through Alphy:
-1. Launch **Alphy Mod Manager**.
-2. Click the **Plugins** button at the bottom of the left sidebar.
-3. Find Alphy Swapper and click **INSTALL PLUGIN**. Alphy will automatically download the latest version and load it directly into memory.
 
-*(Manual Install: Download `Alphy Swapper.dll` and drop it into `%AppData%\Alphy\Plugins`)*
+The easiest way to install Alphy Swapper is through Alphy:
+
+1. Launch **Alphy Mod Manager**.
+2. Authorize your Discord account if prompted.
+3. Click the **Plugins** button.
+4. Find **Alphy Swapper** and click **INSTALL PLUGIN**.
+5. Open the plugin from the Plugins menu.
+
+Manual install is also possible by placing `Alphy Swapper.dll` inside `%AppData%\Alphy\Plugins`.
 
 ### Generating a Swap
-1. Open Alphy and click **RUN SWAPPER** from the Plugins menu.
-2. Select an item category (Body, Decal, Wheels, etc.).
-3. Choose the item you want to replace (Target).
-4. Choose the item you want to equip (Donor).
-5. *(Optional)* Enter a custom folder name for your new mod.
-6. Click **GENERATE SWAP**.
-7. Close the plugin window, and your new mod will automatically be waiting for you in Alphy's grid!
 
-## 🧠 Credits & Acknowledgements
+1. Open Alphy and click **RUN SWAPPER** from the Plugins menu.
+2. Select an item category, such as Body, Decal, Wheels, or Boost.
+3. Choose the item you want to replace.
+4. Choose the item you want to display instead.
+5. Optional: enter a custom folder name.
+6. Optional: switch engines if the default engine does not work for that swap.
+7. Click **GENERATE SWAP**.
+8. The generated mod will appear in Alphy's grid.
+
+---
+
+## Discord Access & Privacy
+
+Alphy Swapper runs inside Alphy, so access is controlled by Alphy's Discord authorization system.
+
+Alphy does **not** receive your Discord password, email, private messages, friends list, or Rocket League account information. Discord handles the authorization page directly.
+
+Alphy only uses the Discord authorization result needed to verify your Discord account, avatar, server membership, and roles in the official Alphy server. Those roles decide whether you can use the app, plugins, custom mods, or beta-only features such as Alphy Pro.
+
+Alphy's authorization service is hosted through Cloudflare. Like most web and API infrastructure providers, Cloudflare may process standard request metadata needed to route, secure, and debug requests, such as IP address, approximate location/network information, user agent, timestamps, request paths, and diagnostic logs.
+
+Alphy does not use Cloudflare request metadata to profile users. It is used only as part of the infrastructure that runs the authorization service.
+
+---
+
+## Repository Status
+
+Alphy Swapper is transitioning to closed-source official builds after **v1.0.3**.
+
+The public repository remains available for:
+
+* Downloading official releases.
+* Reading the latest README and usage information.
+* Preserving legacy source code up to **Alphy Swapper v1.0.3**.
+
+This change was made because Alphy v2.0.0 and newer builds connect to cloud infrastructure, Discord authorization, and role-based permissions. Keeping backend routing and permission logic public would make the official service easier to abuse.
+
+Official builds remain **clean and unobfuscated**.
+
+---
+
+## Credits & Acknowledgements
 
 A massive thank you goes to [Crunchy](https://github.com/CrunchyRL/RLUPKTools). The backend UPK parsing, decryption, and package structure handling in this project would not have been possible without their foundational open-source work on RLUPKTools.
