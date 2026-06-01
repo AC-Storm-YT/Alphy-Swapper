@@ -32,7 +32,7 @@ A simpler fallback engine for cases where a specific swap does not work correctl
 
 Alphy Pro is a beta-only engine available to users with beta feature access in the official Alphy Discord server.
 
-Everyone can see the option in the engine dropdown, but only authorized beta testers can select and use it. Alphy Pro runs the RLUPKTools-style rewrite first, then falls back to the simpler Alphy engine if needed.
+Everyone can see the option in the engine dropdown, but only authorized beta testers can select and use it.
 
 ---
 
