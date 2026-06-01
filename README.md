@@ -48,8 +48,6 @@ The easiest way to install Alphy Swapper is through Alphy:
 4. Find **Alphy Swapper** and click **INSTALL PLUGIN**.
 5. Open the plugin from the Plugins menu.
 
-Manual install is also possible by placing `Alphy Swapper.dll` inside `%AppData%\Alphy\Plugins`.
-
 ### Generating a Swap
 
 1. Open Alphy and click **RUN SWAPPER** from the Plugins menu.
